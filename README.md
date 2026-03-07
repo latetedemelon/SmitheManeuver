@@ -1,1 +1,0 @@
-# SmitheManeuver.github.io
