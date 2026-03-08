@@ -1,3 +1,7 @@
+-----
+
+## layout: null
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -1229,7 +1233,8 @@ flowchart TD
 <!-- ══════════════════════════════════════════════════════════ -->
 
 <script>
-mermaid.initialize({startOnLoad:true,theme:'default',flowchart:{useMaxWidth:true,htmlLabels:true,curve:'basis'}});
+mermaid.initialize({startOnLoad:false,theme:'default',flowchart:{useMaxWidth:true,htmlLabels:true,curve:'basis'}});
+let _mermaidRendered = false;
 
 function show(id,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -1237,6 +1242,13 @@ function show(id,btn){
   document.getElementById(id).classList.add('active');
   if(btn)btn.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  // Lazily render Mermaid diagrams only when the diagrams section becomes visible
+  if(id==='diagrams' && !_mermaidRendered){
+    _mermaidRendered=true;
+    setTimeout(()=>{
+      mermaid.run({nodes:document.querySelectorAll('#diagrams .mermaid')});
+    },50);
+  }
 }
 
 // CHART DEFAULTS
